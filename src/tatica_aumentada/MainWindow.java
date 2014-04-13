@@ -31,8 +31,8 @@ public class MainWindow extends javax.swing.JFrame {
         jTabbedPane_main = new javax.swing.JTabbedPane();
         jPanel_playerCreation = new javax.swing.JPanel();
         jPanel_bottom = new javax.swing.JPanel();
-        jButton_clear = new javax.swing.JButton();
-        jButton_saveCreatedPlayer = new javax.swing.JButton();
+        jButton_create_clear = new javax.swing.JButton();
+        jButton_create_saveCreatedPlayer = new javax.swing.JButton();
         jPanel_right = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jButton_create_takePicture = new javax.swing.JButton();
@@ -56,8 +56,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList_players = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButton_right = new javax.swing.JButton();
+        jButton_left = new javax.swing.JButton();
         jButton_delete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList_selectedPlayers = new javax.swing.JList();
@@ -75,13 +75,23 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel_playerCreation.setLayout(new java.awt.BorderLayout());
 
-        jPanel_bottom.setLayout(new java.awt.GridLayout());
+        jPanel_bottom.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton_clear.setText("Limpar");
-        jPanel_bottom.add(jButton_clear);
+        jButton_create_clear.setText("Limpar");
+        jButton_create_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_create_clearActionPerformed(evt);
+            }
+        });
+        jPanel_bottom.add(jButton_create_clear);
 
-        jButton_saveCreatedPlayer.setText("Salvar jogador");
-        jPanel_bottom.add(jButton_saveCreatedPlayer);
+        jButton_create_saveCreatedPlayer.setText("Salvar jogador");
+        jButton_create_saveCreatedPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_create_saveCreatedPlayerActionPerformed(evt);
+            }
+        });
+        jPanel_bottom.add(jButton_create_saveCreatedPlayer);
 
         jPanel_playerCreation.add(jPanel_bottom, java.awt.BorderLayout.PAGE_END);
 
@@ -224,9 +234,9 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList_players);
 
-        jButton1.setText("->");
+        jButton_right.setText("->");
 
-        jButton2.setText("<-");
+        jButton_left.setText("<-");
 
         jButton_delete.setText("Excluir");
         jButton_delete.setToolTipText("Elimina os registros desse jogador.");
@@ -262,8 +272,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton_left, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton_right, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox_cards, 0, 63, Short.MAX_VALUE))
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,9 +302,9 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_cards, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(jButton_right)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jButton_left)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1))
@@ -334,6 +344,26 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton_create_saveCreatedPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_saveCreatedPlayerActionPerformed
+        //crio e adiciono um novo objeto Player ao listOfPlayers
+        Functions.listOfPlayers.add(new Player(jTextField_create_name.getText(),
+                                               "pictureName",
+                                               Float.parseFloat(jTextField_create_shoulders.getText()),
+                                               Float.parseFloat(jTextField_create_height.getText()),
+                                               Float.parseFloat(jTextField_create_waist.getText()),
+                                               jComboBox_create_color.getSelectedIndex()));
+        Functions.writePlayers();
+    }//GEN-LAST:event_jButton_create_saveCreatedPlayerActionPerformed
+
+    private void jButton_create_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_clearActionPerformed
+        jTextField_create_height.setText(null);
+        jTextField_create_name.setText(null);
+        jTextField_create_shoulders.setText(null);
+        jTextField_create_waist.setText(null);
+        jComboBox_create_color.setSelectedIndex(0);
+           
+    }//GEN-LAST:event_jButton_create_clearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -370,13 +400,13 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton_clear;
+    private javax.swing.JButton jButton_create_clear;
+    private javax.swing.JButton jButton_create_saveCreatedPlayer;
     private javax.swing.JButton jButton_create_takePicture;
     private javax.swing.JButton jButton_delete;
+    private javax.swing.JButton jButton_left;
+    private javax.swing.JButton jButton_right;
     private javax.swing.JButton jButton_run;
-    private javax.swing.JButton jButton_saveCreatedPlayer;
     private javax.swing.JComboBox jComboBox_cards;
     private javax.swing.JComboBox jComboBox_create_color;
     private javax.swing.JLabel jLabel1;

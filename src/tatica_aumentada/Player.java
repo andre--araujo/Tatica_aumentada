@@ -19,4 +19,16 @@ public class Player {
     float height;   //altura
     float waist;    //largura da cintura
     int color;     // cor do bonequino
+
+    public Player(String name, String picture, float shoulders, float height, float waist, int color) {
+        this.name = name;
+        this.picture = picture;
+        //this.card = card;
+        this.shoulders = shoulders;
+        this.height = height;
+        this.waist = waist;
+        this.color = color;
+    }
+    
+    
 }

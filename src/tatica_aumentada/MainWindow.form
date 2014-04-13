@@ -69,15 +69,21 @@
                 <Property name="rows" type="int" value="1"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton_clear">
+                <Component class="javax.swing.JButton" name="jButton_create_clear">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Limpar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_create_clearActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton_saveCreatedPlayer">
+                <Component class="javax.swing.JButton" name="jButton_create_saveCreatedPlayer">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Salvar jogador"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_create_saveCreatedPlayerActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -335,8 +341,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jButton_left" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jButton_right" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jComboBox_cards" pref="63" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
@@ -375,9 +381,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jComboBox_cards" min="-2" pref="51" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton_right" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton_left" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="115" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
@@ -424,12 +430,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="jButton_right">
               <Properties>
                 <Property name="text" type="java.lang.String" value="-&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="jButton_left">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&lt;-"/>
               </Properties>
