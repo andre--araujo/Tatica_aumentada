@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 public class Functions {
     //static Player[] listOfPlayers = new Player[10];
@@ -19,6 +20,8 @@ public class Functions {
     static int green = 2;
     static int white = 3;
     static int black = 4;
+    static DefaultListModel model_listOfPlayers = new DefaultListModel(); //lista na interface grafica com os jogadores disponiveis
+    static DefaultListModel model_listOfSelectedPlayers = new DefaultListModel(); //lista na interface grafica com os jogadores escolhidos
     
 //    static Player findPlayer(String playerName){
 //        for (int i = 0; i < listOfPlayers.size(); i++){
