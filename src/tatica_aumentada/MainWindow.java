@@ -74,9 +74,11 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tática Aumentada");
         setName("frame_mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(520, 327));
+        setPreferredSize(new java.awt.Dimension(630, 325));
 
         jTabbedPane_main.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane_main.setMinimumSize(new java.awt.Dimension(638, 327));
+        jTabbedPane_main.setPreferredSize(new java.awt.Dimension(638, 327));
         jTabbedPane_main.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane_mainMouseClicked(evt);
@@ -118,32 +120,30 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel_rightLayout.createSequentialGroup()
                 .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_rightLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton_create_takePicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel9))
                     .addGroup(jPanel_rightLayout.createSequentialGroup()
-                        .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_rightLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel9))
-                            .addGroup(jPanel_rightLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel12)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel12)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jButton_create_takePicture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel_rightLayout.setVerticalGroup(
             jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_rightLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel9)
-                .addGap(46, 46, 46)
+                .addGap(48, 48, 48)
                 .addComponent(jButton_create_takePicture)
-                .addGap(39, 39, 39)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel12)
                 .addContainerGap(130, Short.MAX_VALUE))
         );
 
         jPanel_playerCreation.add(jPanel_right, java.awt.BorderLayout.LINE_END);
+
+        jPanel_central.setMinimumSize(new java.awt.Dimension(260, 380));
+        jPanel_central.setPreferredSize(new java.awt.Dimension(260, 380));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Preencha com as informações do jogador:");
@@ -197,7 +197,7 @@ public class MainWindow extends javax.swing.JFrame {
                                     .addComponent(jLabel6)))
                             .addComponent(jComboBox_create_color, 0, 74, Short.MAX_VALUE)
                             .addComponent(jTextField_create_name))))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
         jPanel_centralLayout.setVerticalGroup(
             jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox_create_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         jPanel_playerCreation.add(jPanel_central, java.awt.BorderLayout.CENTER);
@@ -264,6 +264,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jButton_run.setText("Rodar!");
         jButton_run.setToolTipText("");
+        jButton_run.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_runActionPerformed(evt);
+            }
+        });
 
         jComboBox_cards.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
 
@@ -294,7 +299,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         jPanel_playerEditLayout.setVerticalGroup(
             jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +334,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGap(0, 486, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,46 +347,15 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane_main)
+            .addComponent(jTabbedPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane_main)
+            .addComponent(jTabbedPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton_create_saveCreatedPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_saveCreatedPlayerActionPerformed
-        //crio e adiciono um novo objeto Player ao listOfPlayers
-        Functions.listOfPlayers.add(new Player(jTextField_create_name.getText(),
-                                               "pictureName",
-                                               Float.parseFloat(jTextField_create_shoulders.getText()),
-                                               Float.parseFloat(jTextField_create_height.getText()),
-                                               Float.parseFloat(jTextField_create_waist.getText()),
-                                               jComboBox_create_color.getSelectedIndex()));
-        
-        //Sorting em ordem alfabética pelo nome do jogador
-        Collections.sort(Functions.listOfPlayers, new Comparator<Player>() {
-        @Override
-        public int compare(Player  player1, Player  player2)
-        {
-
-            return  player1.name.compareTo(player2.name);
-        }
-        });
-        Functions.writePlayers();       
-    }//GEN-LAST:event_jButton_create_saveCreatedPlayerActionPerformed
-
-    private void jButton_create_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_clearActionPerformed
-        //limpa todos os campos de entrada da aba "criar jogador"
-        jTextField_create_height.setText(null);
-        jTextField_create_name.setText(null);
-        jTextField_create_shoulders.setText(null);
-        jTextField_create_waist.setText(null);
-        jComboBox_create_color.setSelectedIndex(0);
-           
-    }//GEN-LAST:event_jButton_create_clearActionPerformed
 
     private void jTabbedPane_mainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane_mainMouseClicked
        //sempre que troco de aba recarrago todos ss jogadores para a lista de jogadores disponiveis 
@@ -402,6 +376,41 @@ public class MainWindow extends javax.swing.JFrame {
         Functions.listOfSelectedPlayers.remove(jList_selectedPlayers.getSelectedIndex());
         Functions.model_listOfSelectedPlayers.remove(jList_selectedPlayers.getSelectedIndex());        
     }//GEN-LAST:event_jButton_leftActionPerformed
+
+    private void jButton_create_saveCreatedPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_saveCreatedPlayerActionPerformed
+        //crio e adiciono um novo objeto Player ao listOfPlayers
+        Functions.listOfPlayers.add(new Player(jTextField_create_name.getText(),
+            "pictureName",
+            Float.parseFloat(jTextField_create_shoulders.getText()),
+            Float.parseFloat(jTextField_create_height.getText()),
+            Float.parseFloat(jTextField_create_waist.getText()),
+            jComboBox_create_color.getSelectedIndex()));
+
+    //Sorting em ordem alfabética pelo nome do jogador
+    Collections.sort(Functions.listOfPlayers, new Comparator<Player>() {
+        @Override
+        public int compare(Player  player1, Player  player2)
+        {
+
+            return  player1.name.compareTo(player2.name);
+        }
+        });
+        Functions.writePlayers();
+    }//GEN-LAST:event_jButton_create_saveCreatedPlayerActionPerformed
+
+    private void jButton_create_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_clearActionPerformed
+        //limpa todos os campos de entrada da aba "criar jogador"
+        jTextField_create_height.setText(null);
+        jTextField_create_name.setText(null);
+        jTextField_create_shoulders.setText(null);
+        jTextField_create_waist.setText(null);
+        jComboBox_create_color.setSelectedIndex(0);
+
+    }//GEN-LAST:event_jButton_create_clearActionPerformed
+
+    private void jButton_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_runActionPerformed
+        VRML.generateObject_data_VRML("oi");
+    }//GEN-LAST:event_jButton_runActionPerformed
 
     /**
      * @param args the command line arguments
