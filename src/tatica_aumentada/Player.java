@@ -13,14 +13,14 @@ package tatica_aumentada;
 public class Player {
     
     String name;
-    String picture; //nome do arquivo da foto de rosto
-    String card; // nome do arquivo do cartão
+    String picture; //nome do arquivo da foto de rosto    
+    String color;     // cor do bonequino
+    int card; // nome do arquivo do cartão/tag
     float shoulders;  // largura dos ombros
     float height;   //altura
-    float waist;    //largura da cintura
-    int color;     // cor do bonequino
+    float waist;    //largura da cintura    
 
-    public Player(String name, String picture, float shoulders, float height, float waist, int color) {
+    public Player(String name, String picture, float shoulders, float height, float waist, String color) {
         this.name = name;
         this.picture = picture;
         //this.card = card;
