@@ -10,30 +10,43 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import opencvwebcam2.VideoCaptura;
 
-public class Functions {
-    //static Player[] listOfPlayers = new Player[10];
+public class Functions {    
     static ArrayList<Player> listOfPlayers = new ArrayList<>(); //guarda todos os jogadores já cadastrados
-    static ArrayList<Player> listOfSelectedPlayers = new ArrayList<>();  //guarda os jogadores selecionados para a RA
-    static int red = 0; //Cores..
-    static int blue = 1;
-    static int green = 2;
-    static int white = 3;
-    static int black = 4;
+    static ArrayList<Player> listOfSelectedPlayers = new ArrayList<>();  //guarda os jogadores selecionados para a RA    
     static DefaultListModel model_listOfPlayers = new DefaultListModel(); //lista na interface grafica com os jogadores disponiveis
     static DefaultListModel model_listOfSelectedPlayers = new DefaultListModel(); //lista na interface grafica com os jogadores escolhidos
+
+    public void takePic(String fileName) throws IOException{
+        VideoCaptura webCam = new VideoCaptura();
+        webCam.takePic(fileName);
+    }
     
-//    static Player findPlayer(String playerName){
-//        for (int i = 0; i < listOfPlayers.size(); i++){
-//            if (listOfPlayers.get(i).name.equals(playerName)){
-//                return listOfPlayers.get(i);
-//            }            
-//        }
-//        //return 0
-//    }
+    static String getColor(int selectedColor){
+           if (selectedColor == 0){ //azul
+               return "0.0 0.0 1.0";
+           }
+           
+           if (selectedColor == 1){ //verde
+               return "0.0 1.0 0.0";
+           }
+           
+           if (selectedColor == 2){ //vermelho
+               return "1.0 0.0 0.0";
+           }
+           
+           if (selectedColor == 3){ //amarelo
+               return "1.0 1.0 0.0";
+           }
+           else {return " 0.0 0.0 0.0";} //preto se der errado
+    }
     
-    
-    
+    //retorna a scale correta da figura baseandos nas proporcoes do jogador (altura, cintura..)
+    static String getScale(Player myPlayer){
+        
+        return  myPlayer.waist/(3*100) +" " + myPlayer.height/(14*100) + " " + myPlayer.waist/(2*100)   ;
+    }
     static void readPlayers(){ // le o arquivo Players.txt contendo todos os jogadores ja criados anteriormente e carrega seus dados
         
         String line = null;
@@ -46,7 +59,7 @@ public class Functions {
             while((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
                 String[] parts = line.split("/");
-                Functions.listOfPlayers.add(new Player(parts[2], parts[3], Float.parseFloat(parts[4]), Float.parseFloat(parts[1]), Float.parseFloat(parts[5]), Integer.parseInt(parts[0])));
+                Functions.listOfPlayers.add(new Player(parts[2], parts[3], Float.parseFloat(parts[4]), Float.parseFloat(parts[1]), Float.parseFloat(parts[5]), parts[0]));
             }	
 
             // Always close files.
@@ -94,4 +107,5 @@ public class Functions {
             // ex.printStackTrace();
         }
     }
+        
 }

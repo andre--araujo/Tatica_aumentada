@@ -1,8 +1,13 @@
 package tatica_aumentada;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import opencvwebcam2.ExibeQuadro;
+import opencvwebcam2.VideoCaptura;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,12 +20,19 @@ import javax.swing.DefaultListModel;
  * @author Andre
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    VideoCaptura webCam;
+    ExibeQuadro exibeQuadro;
+    Thread executor;
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
+        webCam = new VideoCaptura();
+        exibeQuadro = new ExibeQuadro(webCam,camLabel);
+        executor = new Thread(exibeQuadro);
+        executor.start();
+        
     }
 
     /**
@@ -35,12 +47,6 @@ public class MainWindow extends javax.swing.JFrame {
         jTabbedPane_main = new javax.swing.JTabbedPane();
         jPanel_playerCreation = new javax.swing.JPanel();
         jPanel_bottom = new javax.swing.JPanel();
-        jButton_create_clear = new javax.swing.JButton();
-        jButton_create_saveCreatedPlayer = new javax.swing.JButton();
-        jPanel_right = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton_create_takePicture = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         jPanel_central = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -56,6 +62,11 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jComboBox_create_color = new javax.swing.JComboBox();
+        camLabel = new javax.swing.JLabel();
+        jButton_create_takePicture = new javax.swing.JButton();
+        jButton_create_saveCreatedPlayer = new javax.swing.JButton();
+        jButton_create_clear = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel_playerEdit = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,59 +99,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel_playerCreation.setLayout(new java.awt.BorderLayout());
 
         jPanel_bottom.setLayout(new java.awt.GridLayout(1, 0));
-
-        jButton_create_clear.setText("Limpar");
-        jButton_create_clear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_create_clearActionPerformed(evt);
-            }
-        });
-        jPanel_bottom.add(jButton_create_clear);
-
-        jButton_create_saveCreatedPlayer.setText("Salvar jogador");
-        jButton_create_saveCreatedPlayer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_create_saveCreatedPlayerActionPerformed(evt);
-            }
-        });
-        jPanel_bottom.add(jButton_create_saveCreatedPlayer);
-
         jPanel_playerCreation.add(jPanel_bottom, java.awt.BorderLayout.PAGE_END);
-
-        jLabel9.setText("\"webcam aqui\"");
-
-        jButton_create_takePicture.setText("Tirar foto");
-
-        jLabel12.setText("\"foto tirada\"");
-
-        javax.swing.GroupLayout jPanel_rightLayout = new javax.swing.GroupLayout(jPanel_right);
-        jPanel_right.setLayout(jPanel_rightLayout);
-        jPanel_rightLayout.setHorizontalGroup(
-            jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_rightLayout.createSequentialGroup()
-                .addGroup(jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_rightLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel9))
-                    .addGroup(jPanel_rightLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jButton_create_takePicture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel_rightLayout.setVerticalGroup(
-            jPanel_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_rightLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel9)
-                .addGap(48, 48, 48)
-                .addComponent(jButton_create_takePicture)
-                .addGap(37, 37, 37)
-                .addComponent(jLabel12)
-                .addContainerGap(130, Short.MAX_VALUE))
-        );
-
-        jPanel_playerCreation.add(jPanel_right, java.awt.BorderLayout.LINE_END);
 
         jPanel_central.setMinimumSize(new java.awt.Dimension(260, 380));
         jPanel_central.setPreferredSize(new java.awt.Dimension(260, 380));
@@ -164,7 +123,35 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel10.setText("Cor:");
 
-        jComboBox_create_color.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_create_color.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Azul", "Verde", "Vermelho", "Amarelo" }));
+
+        jButton_create_takePicture.setText("Tirar foto");
+        jButton_create_takePicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_create_takePictureActionPerformed(evt);
+            }
+        });
+
+        jButton_create_saveCreatedPlayer.setText("Salvar jogador");
+        jButton_create_saveCreatedPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_create_saveCreatedPlayerActionPerformed(evt);
+            }
+        });
+
+        jButton_create_clear.setText("Limpar");
+        jButton_create_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_create_clearActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_centralLayout = new javax.swing.GroupLayout(jPanel_central);
         jPanel_central.setLayout(jPanel_centralLayout);
@@ -173,31 +160,43 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel_centralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addGroup(jPanel_centralLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel_centralLayout.createSequentialGroup()
                         .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
-                                .addComponent(jLabel2))
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel_centralLayout.createSequentialGroup()
-                                .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField_create_height, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                                    .addComponent(jTextField_create_shoulders)
-                                    .addComponent(jTextField_create_waist))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel6)))
-                            .addComponent(jComboBox_create_color, 0, 74, Short.MAX_VALUE)
-                            .addComponent(jTextField_create_name))))
-                .addGap(10, 10, 10))
+                                    .addComponent(jLabel3)
+                                    .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel4))
+                                        .addComponent(jLabel2))
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel_centralLayout.createSequentialGroup()
+                                        .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextField_create_height, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                                            .addComponent(jTextField_create_shoulders)
+                                            .addComponent(jTextField_create_waist))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel6)))
+                                    .addComponent(jComboBox_create_color, 0, 74, Short.MAX_VALUE)
+                                    .addComponent(jTextField_create_name)))
+                            .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton_create_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButton_create_saveCreatedPlayer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jButton_create_takePicture, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)))
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addComponent(camLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
         );
         jPanel_centralLayout.setVerticalGroup(
             jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +226,19 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanel_centralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox_create_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30)
+                .addComponent(jButton_create_takePicture)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_create_saveCreatedPlayer)
+                .addGap(33, 33, 33)
+                .addComponent(jButton_create_clear)
+                .addGap(32, 32, 32))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_centralLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(camLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel_playerCreation.add(jPanel_central, java.awt.BorderLayout.CENTER);
@@ -270,7 +281,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jComboBox_cards.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
+        jComboBox_cards.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
 
         jLabel11.setText("Cartão:");
 
@@ -299,7 +310,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(525, Short.MAX_VALUE))
         );
         jPanel_playerEditLayout.setVerticalGroup(
             jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +330,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton_left)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_playerEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -334,11 +345,11 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 891, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+            .addGap(0, 653, Short.MAX_VALUE)
         );
 
         jTabbedPane_main.addTab("Cartões", new javax.swing.ImageIcon(getClass().getResource("/tatica_aumentada/Imagens/imprimir.png")), jPanel3, "Selecione os cartões usados para imprimir."); // NOI18N
@@ -347,11 +358,13 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, 1043, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane_main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane_main, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -369,7 +382,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton_rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_rightActionPerformed
         Functions.model_listOfSelectedPlayers.addElement(Functions.listOfPlayers.get( jList_players.getSelectedIndex()).name);
-        Functions.listOfSelectedPlayers.add(Functions.listOfPlayers.get( jList_players.getSelectedIndex()));
+        Functions.listOfPlayers.get( jList_players.getSelectedIndex()).card = jComboBox_cards.getSelectedIndex() + 1; //digo qual card/tag esse jogador irá usar
+        Functions.listOfSelectedPlayers.add(Functions.listOfPlayers.get( jList_players.getSelectedIndex())); //adiciono esse jogador na lista de jogadores escolhidos
     }//GEN-LAST:event_jButton_rightActionPerformed
 
     private void jButton_leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_leftActionPerformed
@@ -384,7 +398,7 @@ public class MainWindow extends javax.swing.JFrame {
             Float.parseFloat(jTextField_create_shoulders.getText()),
             Float.parseFloat(jTextField_create_height.getText()),
             Float.parseFloat(jTextField_create_waist.getText()),
-            jComboBox_create_color.getSelectedIndex()));
+            Functions.getColor(jComboBox_create_color.getSelectedIndex())));
 
     //Sorting em ordem alfabética pelo nome do jogador
     Collections.sort(Functions.listOfPlayers, new Comparator<Player>() {
@@ -409,8 +423,29 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_create_clearActionPerformed
 
     private void jButton_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_runActionPerformed
-        VRML.generateObject_data_VRML("oi");
+        VRML.generateObject_data_VRML();
+        VRML.generateDat();
+        VRML.generateWRL();
+        VRML.runARtoolkit();
     }//GEN-LAST:event_jButton_runActionPerformed
+
+    private void jButton_create_takePictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_create_takePictureActionPerformed
+        // TODO add your handling code here:
+        Functions fun = new Functions();
+        try {
+            fun.takePic(jTextField_create_name.getText());
+            
+            executor.suspend();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_create_takePictureActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        executor.start();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -448,6 +483,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel camLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_create_clear;
     private javax.swing.JButton jButton_create_saveCreatedPlayer;
     private javax.swing.JButton jButton_create_takePicture;
@@ -460,7 +497,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -470,7 +506,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList_players;
     private javax.swing.JList jList_selectedPlayers;
     private javax.swing.JPanel jPanel3;
@@ -478,7 +513,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_central;
     private javax.swing.JPanel jPanel_playerCreation;
     private javax.swing.JPanel jPanel_playerEdit;
-    private javax.swing.JPanel jPanel_right;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane_main;
